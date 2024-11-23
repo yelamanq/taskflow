@@ -1,38 +1,383 @@
+@font-face {
+  font-family: "GeneralSans";
+  src: url("./assets/fonts/general-sans/GeneralSans-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("./assets/fonts/general-sans/GeneralSans-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("./assets/fonts/general-sans/GeneralSans-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("./assets/fonts/general-sans/GeneralSans-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("./assets/fonts/general-sans/GeneralSans-Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'GeneralSans';
+}
+
+body {
+  background-color: #F9F9F9;
+}
+
+#root {
+  display: flex;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 70px 250px;
+  width: 100%;
+  background-color: #F9F9F9;
+}
+
+.logoText {
+  text-align: center;
+  font-size: 45px;
+  width: 100%;
+  font-weight: 600;
+}
+
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  padding: 35px;
+  background-color: white;
+  border-radius: 16px;
+  margin-top: 50px;
+  box-shadow: rgba(100, 100, 111, 0.13) 0px 7px 29px 0px;
+}
+
+.formHead {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.newTask {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.plusIcon {
+  height: 20px;
+  transition: .2s;
+}
+
+.plusIcon.rotate {
+  transform: rotate(45deg);
+  transition: .2s;
+}
+
+.formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+  max-height: 0;
+  transition: .4s;
+  opacity: 0;
+}
+
+.formBody.show {
+  margin-top: 40px;
+  max-height: 500px;
+  transition: .4s;
+  opacity: 1;
+}
+
+.formBody.hide {
+  max-height: 0;
+  opacity: 0;
+  transition: .4s;
+}
+
+.taskTitle {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #FBFBFB;
+  font-size: 15px;
+}
+
+.taskTitle::placeholder {
+  color: #C6C6C6;
+}
+
+.taskTitle:focus {
+  outline: none;
+}
+
+.taskBody {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #FBFBFB;
+  font-size: 15px;
+  resize: none;
+}
+
+.taskBody::placeholder {
+  color: #C6C6C6;
+}
+
+.taskBody:focus {
+  outline: none;
+}
+
+.buttonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.addButton {
+  padding: 8px 25px;
+  color: white;
+  background-color: #0760FB;
+  border: none;
+  font-size: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.noTasks {
+  text-align: center;
+  font-weight: 400;
+  color: rgb(179, 179, 179);
+  margin-top: 100px;
+  font-size: 20px;
+}
+
+.taskList {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.taskItem {
+  display: flex;
+  padding: 35px;
+  border-radius: 16px;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.13) 0px 7px 29px 0px;
+  transition: .2s;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskItem.done {
+  background-color: #0760FB;
+  transition: .2s;
+}
+
+.itemTitle {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.itemTitle.done {
+  color: white;
+  text-decoration: line-through;
+}
+
+.itemBody {
+  color: #858585;
+  font-weight: 400;
+}
+.itemBody.done {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.cbox {
+  position: relative;
+  margin-right: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.cbox input[type="checkbox"] {
+  display: none;
+  visibility: hidden;
+}
+.cbox .cbx {
+  -webkit-perspective: 20;
+  perspective: 20;
+  display: inline-block;
+  border: 1.5px solid #000000;
+  background: #e8e8eb;
+  border-radius: 4px;
+  transform: translate3d(0, 0, 0);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.cbox .cbx:hover {
+  border-color: #0b76ef;
+}
+.cbox .flip {
+  display: block;
+  transition: all 0.4s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+.cbox input[type="checkbox"]:checked + .cbx {
+  border-color: #0b76ef;
+}
+.cbox input[type="checkbox"]:checked + .cbx .flip {
+  transform: rotateY(180deg);
+}
+.cbox .front,
+.cbox .back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}
+.cbox .front {
+  background: #fff;
+  z-index: 1;
+}
+.cbox .back {
+  transform: rotateY(180deg);
+  background: #ffffff;
+  text-align: center;
+  color: #0b76ef;
+  line-height: 20px;
+  box-shadow: 0 0 0 1px #ffffff;
+}
+.cbox .back svg {
+  margin-top: 3px;
+  fill: none;
+}
+.cbox .back svg path {
+  stroke: #0b76ef;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.delete {
+  display: flex;
+  padding: 15px;
+  background-color: #FB0744;
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.deleteIcon {
+  height: 20px;
+}
+
+
+
+
+@media (max-width: 480px) {
+  .App {
+    padding: 50px;
   }
-  to {
-    transform: rotate(360deg);
+  .logoText {
+    font-size: 35px;
+  }
+  .taskForm {
+    padding: 25px;
+  }
+  .newTask {
+    font-size: 16px;
+  }
+  .plusIcon  {
+    height: 14px;
+  }
+  .addButton {
+    font-size: 10px;
+    padding: 8px 15px;
+  }
+  .taskTitle {
+    font-size: 12px;
+  }
+  .taskBody {
+    font-size: 12px;
+  }
+  .taskItem {
+    padding: 25px;
+  }
+  .itemTitle  {
+    font-size: 16px;
+  }
+  .cbox {
+    margin-right: 15px;
+  }
+  .itemBody  {
+    font-size: 12px;
+  }
+  .cbox .front, .cbox .back {
+    width: 14px;
+    height: 14px;
+  }
+  .cbox .flip {
+    width: 14px;
+    height: 14px;
+  }
+  .cbox .back {
+    line-height: 15px;
+  }
+  .checkmark {
+    width: 12px;
+    height: auto;
+  }
+  .delete {
+    width: 20px;
+    height: 20px;
+  }
+  .deleteIcon {
+    height: 14px;
+    width: 14px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .App {
+    padding: 70px;
+  }
+}
+
+@media (min-width: 767px) and (max-width: 1200px) {
+  .App {
+    padding: 100px;
   }
 }
